@@ -9,7 +9,7 @@ Author: Ricardo Gonz&aacute;lez
 Author URI: http://rick.jinlabs.com/
 */
 
-/*  Copyright 2007  Ricardo Gonz·lez Castro (rick[in]jinlabs.com)
+/*  Copyright 2007  Ricardo Gonz√°lez Castro (rick[in]jinlabs.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ function twitter_messages($username = '', $num = 1, $list = false, $update = tru
 	global $twitter_options;
 	include_once(ABSPATH . WPINC . '/rss.php');
 	
-	$messages = fetch_rss('http://twitter.com/statuses/user_timeline/'.$username.'.rss');
+	$messages = fetch_rss('http://api.twitter.com/1/statuses/user_timeline.rss?screen_name='.$username);
 
 	if ($list) echo '<ul class="twitter">';
 	
@@ -123,12 +123,12 @@ function hyperlinks($text) {
     // match name@address
     $text = preg_replace("/\b([a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]*\@[a-zA-Z][a-zA-Z0-9\_\.\-]*[a-zA-Z]{2,6})\b/i","<a href=\"mailto://$1\" class=\"twitter-link\">$1</a>", $text);
         //mach #trendingtopics. Props to Michael Voigt
-    $text = preg_replace('/([\.|\,|\:|\°|\ø|\>|\{|\(]?)#{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/#search?q=$2\" class=\"twitter-link\">#$2</a>$3 ", $text);
+    $text = preg_replace('/([\.|\,|\:|\¬°|\¬ø|\>|\{|\(]?)#{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/#search?q=$2\" class=\"twitter-link\">#$2</a>$3 ", $text);
     return $text;
 }
 
 function twitter_users($text) {
-       $text = preg_replace('/([\.|\,|\:|\°|\ø|\>|\{|\(]?)@{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/$2\" class=\"twitter-user\">@$2</a>$3 ", $text);
+       $text = preg_replace('/([\.|\,|\:|\¬°|\¬ø|\>|\{|\(]?)@{1}(\w*)([\.|\,|\:|\!|\?|\>|\}|\)]?)\s/i', "$1<a href=\"http://twitter.com/$2\" class=\"twitter-user\">@$2</a>$3 ", $text);
        return $text;
 }     
 
@@ -165,7 +165,7 @@ function widget_twitter_init() {
 			}
 		}
 		
-		$messages = fetch_rss('http://twitter.com/statuses/user_timeline/'.$item['username'].'.rss');
+		$messages = fetch_rss('http://api.twitter.com/1/statuses/user_timeline.rss?screen_name='.$item['username']);
 
 
 		// These lines generate our output.
